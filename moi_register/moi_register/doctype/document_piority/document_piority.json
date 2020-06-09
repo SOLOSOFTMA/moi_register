@@ -1,31 +1,22 @@
 {
- "autoname": "field:document_type",
- "creation": "2020-05-25 20:42:08.729064",
+ "autoname": "Prompt",
+ "creation": "2020-05-26 22:20:42.979518",
  "doctype": "DocType",
- "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "document_type",
-  "document_description"
+  "description"
  ],
  "fields": [
   {
-   "fieldname": "document_type",
-   "fieldtype": "Data",
-   "label": "Document Type",
-   "unique": 1
-  },
-  {
-   "fieldname": "document_description",
-   "fieldtype": "Data",
-   "label": "Document Description"
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
   }
  ],
- "modified": "2020-06-02 10:34:59.971983",
+ "modified": "2020-06-02 11:50:04.763594",
  "modified_by": "Administrator",
  "module": "MOI Register",
- "name": "Document Type",
- "name_case": "Title Case",
+ "name": "Document Piority",
  "owner": "Administrator",
  "permissions": [
   {
@@ -74,9 +65,8 @@
    "write": 1
   }
  ],
+ "quick_entry": 1,
  "sort_field": "modified",
- "sort_order": "DESC",
- "track_changes": 1,
- "track_seen": 1,
- "track_views": 1
+ "sort_order": "ASC",
+ "track_changes": 1
 }

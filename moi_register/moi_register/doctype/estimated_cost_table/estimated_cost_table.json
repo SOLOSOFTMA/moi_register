@@ -1,0 +1,65 @@
+{
+ "creation": "2020-05-28 19:55:25.417335",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "items",
+  "qty",
+  "rate",
+  "total"
+ ],
+ "fields": [
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "items",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Items"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Quatity"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Rate"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "total",
+   "fieldtype": "Currency",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Total",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-05-28 21:35:29.360125",
+ "modified_by": "Administrator",
+ "module": "MOI Register",
+ "name": "Estimated Cost Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -10,6 +10,10 @@ def get_data():
 							"type": "doctype",
 							"name": "Document Type",
 						},
+                        {
+							"type": "doctype",
+							"name": "Internal Memo Type",
+						},
 				]
 			},
 				{
