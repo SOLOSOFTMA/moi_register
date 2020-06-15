@@ -10,17 +10,18 @@
   "section_break_2",
   "document_type",
   "internal_memo_type",
-  "status",
   "subject",
   "column_break_3",
   "ref",
   "register_date",
+  "status",
   "document_type_section",
   "document_from_employee",
   "document_from",
   "column_break_9",
   "document_to_employee",
   "document_to",
+  "ceo_status",
   "department_approval_section",
   "head_of_department",
   "head_of_department_name",
@@ -177,6 +178,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "document_to",
    "fieldtype": "Read Only",
    "label": "To"
@@ -483,7 +485,8 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Approved/Decline",
-   "options": "\nPending\nHOD Approved\nEndorsed\nNOT Endorsed\nApproved\nDecline\nCompleted"
+   "options": "\nPending\nHOD Approved\nEndorsed\nNOT Endorsed\nApproved\nDecline\nCompleted",
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -562,8 +565,10 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "document_to_employee",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Document To",
    "read_only": 1
   },
@@ -589,13 +594,15 @@
    "fieldname": "hod_approval_status",
    "fieldtype": "Select",
    "label": "Approval/Decline",
-   "options": "\nApproved\nDecline"
+   "options": "\nApproved\nDecline",
+   "read_only": 1
   },
   {
    "fieldname": "director_of_ssd_status",
    "fieldtype": "Select",
    "label": "Endorsed/Decline",
-   "options": "\nEndorsed\nNOT Endorsed"
+   "options": "\nEndorsed\nNOT Endorsed",
+   "read_only": 1
   },
   {
    "fetch_from": "head_of_department.employee_name",
@@ -613,10 +620,17 @@
    "fieldname": "department_approval_section",
    "fieldtype": "Section Break",
    "label": "DEPARTMENT APPROVAL"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "ceo_status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "CEO Approval Status"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-06-16 00:03:43.968390",
+ "modified": "2020-06-16 02:50:21.312821",
  "modified_by": "Administrator",
  "module": "MOI Register",
  "name": "Document Register",

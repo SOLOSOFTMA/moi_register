@@ -23,6 +23,14 @@ frappe.ui.form.on('Document Register', {
 								}else if (frm.doc.hod_approval_status == "Decline"){
 									frm.set_value("status", "Decline")
 								}
+
+								if(frm.doc.hod_approval_status == "Approved" && frm.doc.internal_memo_type == "Acting Appointment"){
+									if (frm.doc.workflow_state == "HOD Approved"){
+										frm.set_value("status", "Endorsed")
+//										frm.set_value("workflow_state", "Endorsed")
+										frm.set_value("director_of_ssd_status", "Endorsed")
+									}
+								}
 							}
 							else{
 								cur_frm.set_df_property("hod_approval_status", "read_only", 0);
@@ -48,6 +56,22 @@ frappe.ui.form.on('Document Register', {
 							}
 						}else {
 							cur_frm.set_df_property("director_of_ssd_status", "read_only", 1);
+						}
+
+						if (in_list(["CEO"], data.message["designation"]) || data.message["acting_ceo"]=="1"){
+							if(frm.doc.status == "Approved"){
+								frm.set_value("ceo_status", "Approved")
+							}else if (frm.doc.status == "Decline"){
+								frm.set_value("ceo_status", "Decline")
+							}
+							if(frm.doc.internal_memo_type == "Acting Appointment"){
+								if (frm.doc.workflow_state == "HOD Approved"){
+									
+										frm.set_value("workflow_state", "Endorsed")
+									
+								}
+							}
+
 						}
 					}
 		 })

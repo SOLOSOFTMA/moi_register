@@ -11,9 +11,9 @@ class DocumentRegister(Document):
     def on_submit(self):
         if not self.ref:
             self.ref = self.name
-        if not self.document_to_employee:
-            frappe.throw("Your Message.)
-            self.get_document_to()
+        if not self.document_to_employee:self.get_document_to()
+#            self.insert()
+ #           self.submit()
         
 
 
@@ -23,6 +23,9 @@ class DocumentRegister(Document):
         if self.hod_approval_status:
             if not self.head_of_department_name:
                 self.get_department_approval()
+
+#        if self.internal_memo_type == "Acting Appointment":
+#            self.workflow_state = "Endorsed"
   
                 
         if self.director_of_ssd_status:
@@ -49,10 +52,12 @@ class DocumentRegister(Document):
         db_value = frappe.db.get_value("Employee", {"user_id": user}, ["name", "employee_name"], as_dict=1)
         self.head_of_department = db_value.name
         self.head_of_department_name = db_value.employee_name
+
+#        if self.internal_memo_type == "Acting Appointment" and self.workflow_state == "HOD Approved":
+#            self.workflow_state = "Endorsed"
         
     def get_director_of_ssd(self):
         user = frappe.session.user
         db_value = frappe.db.get_value("Employee", {"user_id": user}, ["name", "employee_name"], as_dict=1)
         self.director_of_ssd = db_value.name
         self.director_of_ssd_name = db_value.employee_name
-    
