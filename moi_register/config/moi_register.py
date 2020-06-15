@@ -21,7 +21,7 @@ def get_data():
 				"items": [
 						{
 							"type": "doctype",
-							"name": "Document",
+							"name": "Document Register",
 						},
 				]
 			},

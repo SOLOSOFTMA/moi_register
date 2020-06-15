@@ -1,0 +1,682 @@
+{
+ "allow_events_in_timeline": 1,
+ "autoname": "naming_series:",
+ "creation": "2020-05-25 21:04:30.742147",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "section_break_2",
+  "document_type",
+  "internal_memo_type",
+  "status",
+  "subject",
+  "column_break_3",
+  "ref",
+  "register_date",
+  "document_type_section",
+  "document_from_employee",
+  "document_from",
+  "column_break_9",
+  "document_to_employee",
+  "document_to",
+  "department_approval_section",
+  "head_of_department",
+  "head_of_department_name",
+  "hod_approval_status",
+  "column_break_16",
+  "director_of_ssd",
+  "director_of_ssd_name",
+  "director_of_ssd_status",
+  "request_for_transfer_section",
+  "piority",
+  "amount",
+  "column_break_20",
+  "account_number",
+  "section_break_22",
+  "reason_for_the_transfer",
+  "reason_not_affect_amp",
+  "section_break_21",
+  "comment",
+  "document_detail",
+  "procurement_section",
+  "estimated_cost_table",
+  "total_estimate",
+  "vote",
+  "reason_for_procurement",
+  "safety_gears_section",
+  "reason_for_safety_gears",
+  "safety_gears_table",
+  "permission_travel",
+  "employee_travel_table",
+  "permission_to",
+  "travel_section",
+  "travel_to",
+  "travel_break",
+  "travel_from_date",
+  "column_break_39",
+  "travel_to_date",
+  "column_break_41",
+  "travel_period",
+  "section_break_43",
+  "travel_on",
+  "travel_on_other",
+  "column_break_43",
+  "return_on",
+  "return_on_other",
+  "travel_extend_section",
+  "extend_stay_at",
+  "column_break_433",
+  "extend_date_from",
+  "column_break_45",
+  "extend_date_to",
+  "column_break_47",
+  "extend_period",
+  "reason_to_travel_section",
+  "travel_reason",
+  "letter_head_section",
+  "letter_head_content",
+  "overtime_request_section",
+  "request_from",
+  "overtime_sheet",
+  "section_break_63",
+  "recommended_by",
+  "employee_name",
+  "employee_post",
+  "column_break_65",
+  "approved_by",
+  "approved_name",
+  "approval_post",
+  "assessment_section",
+  "check_by",
+  "employee_check_name",
+  "column_break_68",
+  "comments_overtime",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "MOI-R.-.YY.MM.####",
+   "read_only": 1
+  },
+  {
+   "fieldname": "document_type",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Document Type",
+   "options": "Document Type",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "document_from_employee.employee_name",
+   "fieldname": "document_from",
+   "fieldtype": "Read Only",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "From"
+  },
+  {
+   "fieldname": "document_detail",
+   "fieldtype": "Text Editor",
+   "hidden": 1,
+   "label": "Document Detail"
+  },
+  {
+   "fieldname": "register_date",
+   "fieldtype": "Date",
+   "label": "Register Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Document Register",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Text Editor",
+   "hidden": 1,
+   "label": "Comment"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "ref",
+   "fieldtype": "Read Only",
+   "label": "Ref"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "subject",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Subject",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "document_to",
+   "fieldtype": "Read Only",
+   "label": "To"
+  },
+  {
+   "fieldname": "piority",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Piority",
+   "options": "Document Piority"
+  },
+  {
+   "depends_on": "eval:doc.document_type==\"Internal Memo\"",
+   "fieldname": "internal_memo_type",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Internal Memo Type",
+   "options": "Internal Memo Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.internal_memo_type == \"Request Transfer\"",
+   "fieldname": "request_for_transfer_section",
+   "fieldtype": "Section Break",
+   "label": "Request for Transfer"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount"
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.internal_memo_type==\"Request Transfer\"",
+   "fieldname": "account_number",
+   "fieldtype": "Data",
+   "label": "Account Numner"
+  },
+  {
+   "depends_on": "eval:doc.internal_memo_type == \"Request Transfer\"",
+   "fieldname": "section_break_22",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.internal_memo_type==\"Request Transfer\"",
+   "fieldname": "reason_for_the_transfer",
+   "fieldtype": "Text Editor",
+   "label": "Reason for the Transfer"
+  },
+  {
+   "depends_on": "eval:doc.internal_memo_type==\"Request Transfer\"",
+   "fieldname": "reason_not_affect_amp",
+   "fieldtype": "Text Editor",
+   "label": "Reason why this transfer will not affect your division\u2019s AMP"
+  },
+  {
+   "fieldname": "section_break_21",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.internal_memo_type==\"Request for Procurement\"",
+   "fieldname": "procurement_section",
+   "fieldtype": "Section Break",
+   "label": "Request for Procurement"
+  },
+  {
+   "fieldname": "reason_for_procurement",
+   "fieldtype": "Text Editor",
+   "label": "Reason why this item is needed"
+  },
+  {
+   "fieldname": "estimated_cost_table",
+   "fieldtype": "Table",
+   "label": "Estimated Cost",
+   "options": "Estimated Cost Table"
+  },
+  {
+   "fieldname": "total_estimate",
+   "fieldtype": "Currency",
+   "label": "Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "vote",
+   "fieldtype": "Data",
+   "label": "Vote Number"
+  },
+  {
+   "depends_on": "eval:doc.internal_memo_type==\"Safety Gears\"",
+   "fieldname": "safety_gears_section",
+   "fieldtype": "Section Break",
+   "label": "Satety Gears"
+  },
+  {
+   "fieldname": "safety_gears_table",
+   "fieldtype": "Table",
+   "label": "Safety Gears",
+   "options": "Safety Gears Table"
+  },
+  {
+   "fieldname": "reason_for_safety_gears",
+   "fieldtype": "Text Editor",
+   "label": "Reason for Safety Gears needed"
+  },
+  {
+   "depends_on": "eval:doc.internal_memo_type == \"Permission to Travel\"",
+   "fieldname": "permission_travel",
+   "fieldtype": "Section Break",
+   "label": "Travel Permission"
+  },
+  {
+   "fieldname": "employee_travel_table",
+   "fieldtype": "Table",
+   "label": "Employee",
+   "options": "Travel Permission Table"
+  },
+  {
+   "fieldname": "permission_to",
+   "fieldtype": "Select",
+   "label": "Permission To",
+   "options": "\nTravel\nExtend"
+  },
+  {
+   "fieldname": "travel_to",
+   "fieldtype": "Link",
+   "label": "Travel To",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "column_break_39",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "travel_period",
+   "fieldtype": "Data",
+   "label": "Travel Period (Days)"
+  },
+  {
+   "depends_on": "eval:doc.permission_to==\"Travel\"",
+   "fieldname": "travel_section",
+   "fieldtype": "Section Break",
+   "label": "Travel"
+  },
+  {
+   "fieldname": "travel_break",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.permission_to==\"Extend\"",
+   "fieldname": "travel_extend_section",
+   "fieldtype": "Section Break",
+   "label": "Travel Extend"
+  },
+  {
+   "fieldname": "extend_stay_at",
+   "fieldtype": "Link",
+   "label": "Extend Stay at",
+   "options": "Branch"
+  },
+  {
+   "fieldname": "column_break_43",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "extend_date_from",
+   "fieldtype": "Date",
+   "label": "From"
+  },
+  {
+   "fieldname": "column_break_45",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "extend_date_to",
+   "fieldtype": "Date",
+   "label": "To"
+  },
+  {
+   "fieldname": "column_break_47",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "extend_period",
+   "fieldtype": "Data",
+   "label": "Extend Period"
+  },
+  {
+   "depends_on": "eval:doc.internal_memo_type == \"Permission to Travel\"",
+   "fieldname": "section_break_43",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "travel_on",
+   "fieldtype": "Select",
+   "label": "Means of Conveyance Travel on",
+   "options": "\nReal Tonga\nFISA\n'Eua Ferry\nOther"
+  },
+  {
+   "fieldname": "return_on",
+   "fieldtype": "Select",
+   "label": "Return On",
+   "options": "\nReal Tonga\nFISA\n'Eua Ferry\nOther"
+  },
+  {
+   "fieldname": "column_break_433",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.travel_on==\"Other\"",
+   "fieldname": "travel_on_other",
+   "fieldtype": "Data",
+   "label": "Travel on Other"
+  },
+  {
+   "depends_on": "eval:doc.return_on==\"Other\"",
+   "fieldname": "return_on_other",
+   "fieldtype": "Data",
+   "label": "Return on Other"
+  },
+  {
+   "fieldname": "travel_reason",
+   "fieldtype": "Text Editor",
+   "label": "Reason"
+  },
+  {
+   "depends_on": "eval:doc.internal_memo_type == \"Permission to Travel\"",
+   "fieldname": "reason_to_travel_section",
+   "fieldtype": "Section Break",
+   "label": "Reason to Travel/Extend"
+  },
+  {
+   "fieldname": "travel_from_date",
+   "fieldtype": "Date",
+   "label": "Travel From"
+  },
+  {
+   "fieldname": "travel_to_date",
+   "fieldtype": "Date",
+   "label": "To"
+  },
+  {
+   "fieldname": "column_break_41",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:in_list([\"Savingram\", \"Internal Memo\"], doc.document_type)",
+   "fieldname": "document_type_section",
+   "fieldtype": "Section Break",
+   "label": "DOCUMENT FROM/TO"
+  },
+  {
+   "depends_on": "eval:doc.document_type==\"Letter Head\"",
+   "fieldname": "letter_head_section",
+   "fieldtype": "Section Break",
+   "label": "Letter Head Section"
+  },
+  {
+   "fieldname": "letter_head_content",
+   "fieldtype": "Text Editor",
+   "label": "Letter Content"
+  },
+  {
+   "depends_on": "eval:doc.document_type==\"Overtime Request\"",
+   "fieldname": "overtime_request_section",
+   "fieldtype": "Section Break",
+   "label": "Overtime Request"
+  },
+  {
+   "fieldname": "overtime_sheet",
+   "fieldtype": "Table",
+   "label": "Overtime Form",
+   "options": "Overtime Form"
+  },
+  {
+   "fieldname": "recommended_by",
+   "fieldtype": "Data",
+   "label": "Recommended By"
+  },
+  {
+   "depends_on": "eval:doc.document_type==\"Overtime Request\"",
+   "fieldname": "section_break_63",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_65",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Pending",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Approved/Decline",
+   "options": "\nPending\nHOD Approved\nEndorsed\nNOT Endorsed\nApproved\nDecline\nCompleted"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "check_by",
+   "fieldtype": "Data",
+   "label": "Check By"
+  },
+  {
+   "fieldname": "column_break_68",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "comments_overtime",
+   "fieldtype": "Small Text",
+   "label": "Comments"
+  },
+  {
+   "fetch_from": "recommended_by.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Read Only",
+   "label": "Employee Name"
+  },
+  {
+   "allow_on_submit": 1,
+   "fetch_from": "check_by.employee_name",
+   "fieldname": "employee_check_name",
+   "fieldtype": "Read Only",
+   "label": "Employee Name"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "approved_by",
+   "fieldtype": "Data",
+   "label": "Approved By"
+  },
+  {
+   "allow_on_submit": 1,
+   "fetch_from": "approved_by.employee_name",
+   "fieldname": "approved_name",
+   "fieldtype": "Read Only",
+   "label": "Approved Name"
+  },
+  {
+   "depends_on": "eval:doc.document_type==\"Overtime Request\"",
+   "fieldname": "assessment_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "request_from",
+   "fieldtype": "Link",
+   "label": "Request from",
+   "options": "Department"
+  },
+  {
+   "allow_on_submit": 1,
+   "fetch_from": "recommended_by.designation",
+   "fieldname": "employee_post",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Employee Post"
+  },
+  {
+   "allow_on_submit": 1,
+   "fetch_from": "approved_by.designation",
+   "fieldname": "approval_post",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Approval Post"
+  },
+  {
+   "fieldname": "document_from_employee",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Document From",
+   "read_only": 1
+  },
+  {
+   "fieldname": "document_to_employee",
+   "fieldtype": "Data",
+   "label": "Document To",
+   "read_only": 1
+  },
+  {
+   "fieldname": "head_of_department",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Head of Department",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "director_of_ssd",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Head of SSD",
+   "read_only": 1
+  },
+  {
+   "fieldname": "hod_approval_status",
+   "fieldtype": "Select",
+   "label": "Approval/Decline",
+   "options": "\nApproved\nDecline"
+  },
+  {
+   "fieldname": "director_of_ssd_status",
+   "fieldtype": "Select",
+   "label": "Endorsed/Decline",
+   "options": "\nEndorsed\nNOT Endorsed"
+  },
+  {
+   "fetch_from": "head_of_department.employee_name",
+   "fieldname": "head_of_department_name",
+   "fieldtype": "Read Only",
+   "label": "Head of Department"
+  },
+  {
+   "fetch_from": "director_of_ssd.employee_name",
+   "fieldname": "director_of_ssd_name",
+   "fieldtype": "Read Only",
+   "label": "Name"
+  },
+  {
+   "fieldname": "department_approval_section",
+   "fieldtype": "Section Break",
+   "label": "DEPARTMENT APPROVAL"
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2020-06-16 00:03:43.968390",
+ "modified_by": "Administrator",
+ "module": "MOI Register",
+ "name": "Document Register",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Document Approval",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Document Inward",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Document Outward",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "document_type, document_from",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
+}
