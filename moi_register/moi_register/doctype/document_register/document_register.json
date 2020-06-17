@@ -94,6 +94,31 @@
   "employee_check_name",
   "column_break_68",
   "comments_overtime",
+  "acting_appointment_section",
+  "employee_to_appoint",
+  "employee_to_appoint_salutation",
+  "employee_to_appoint_name",
+  "employee_to_appoint_post",
+  "acting_for",
+  "column_break_93",
+  "behalf_of_employee",
+  "behalf_of_employee_salutation",
+  "behalf_of_employee_name",
+  "behalf_of_employee_post",
+  "acting_period",
+  "acting_type_section",
+  "acting_type",
+  "column_break_103",
+  "later_acting_percentage",
+  "higher_post_acting",
+  "section_break_106",
+  "acting_from_date",
+  "column_break_108",
+  "acting_to_date",
+  "column_break_110",
+  "type_of_leave",
+  "section_break_112",
+  "reason_for_acting_appoint",
   "amended_from"
  ],
  "fields": [
@@ -132,8 +157,12 @@
    "label": "Document Detail"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "register_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Register Date",
    "reqd": 1
   },
@@ -167,7 +196,6 @@
    "fieldname": "subject",
    "fieldtype": "Data",
    "in_global_search": 1,
-   "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Subject",
@@ -467,8 +495,10 @@
   },
   {
    "fieldname": "recommended_by",
-   "fieldtype": "Data",
-   "label": "Recommended By"
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Recommended By",
+   "options": "Employee"
   },
   {
    "depends_on": "eval:doc.document_type==\"Overtime Request\"",
@@ -491,8 +521,10 @@
   {
    "allow_on_submit": 1,
    "fieldname": "check_by",
-   "fieldtype": "Data",
-   "label": "Check By"
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Check By",
+   "options": "Employee"
   },
   {
    "fieldname": "column_break_68",
@@ -520,8 +552,10 @@
   {
    "allow_on_submit": 1,
    "fieldname": "approved_by",
-   "fieldtype": "Data",
-   "label": "Approved By"
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Approved By",
+   "options": "Employee"
   },
   {
    "allow_on_submit": 1,
@@ -545,7 +579,7 @@
    "allow_on_submit": 1,
    "fetch_from": "recommended_by.designation",
    "fieldname": "employee_post",
-   "fieldtype": "Data",
+   "fieldtype": "Read Only",
    "hidden": 1,
    "label": "Employee Post"
   },
@@ -553,7 +587,7 @@
    "allow_on_submit": 1,
    "fetch_from": "approved_by.designation",
    "fieldname": "approval_post",
-   "fieldtype": "Data",
+   "fieldtype": "Read Only",
    "hidden": 1,
    "label": "Approval Post"
   },
@@ -627,10 +661,149 @@
    "fieldtype": "Select",
    "hidden": 1,
    "label": "CEO Approval Status"
+  },
+  {
+   "depends_on": "eval:doc.internal_memo_type==\"Acting Appointment\"",
+   "fieldname": "acting_appointment_section",
+   "fieldtype": "Section Break",
+   "label": "Acting Appointment"
+  },
+  {
+   "fieldname": "employee_to_appoint",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Employee to appoint",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "employee_to_appoint.employee_name",
+   "fieldname": "employee_to_appoint_name",
+   "fieldtype": "Read Only",
+   "label": "Employee Name"
+  },
+  {
+   "fieldname": "column_break_93",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "behalf_of_employee",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Behalf of",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "behalf_of_employee.employee_name",
+   "fieldname": "behalf_of_employee_name",
+   "fieldtype": "Read Only",
+   "label": "Behalf of Name"
+  },
+  {
+   "fetch_from": "employee_to_appoint.salutation",
+   "fieldname": "employee_to_appoint_salutation",
+   "fieldtype": "Read Only",
+   "label": "Salutaion"
+  },
+  {
+   "fetch_from": "behalf_of_employee.salutation",
+   "fieldname": "behalf_of_employee_salutation",
+   "fieldtype": "Read Only",
+   "label": "Salutation"
+  },
+  {
+   "fetch_from": "employee_to_appoint.designation",
+   "fieldname": "employee_to_appoint_post",
+   "fieldtype": "Read Only",
+   "label": "Employee Post"
+  },
+  {
+   "fetch_from": "behalf_of_employee.designation",
+   "fieldname": "behalf_of_employee_post",
+   "fieldtype": "Read Only",
+   "label": "Employee Post"
+  },
+  {
+   "fieldname": "acting_for",
+   "fieldtype": "Data",
+   "label": "Acting for"
+  },
+  {
+   "fieldname": "acting_period",
+   "fieldtype": "Select",
+   "label": "Acting Period",
+   "options": "\nDay\nDays\nWeek\nWeeks\nMonth\nMonths"
+  },
+  {
+   "depends_on": "eval:doc.internal_memo_type==\"Acting Appointment\"",
+   "fieldname": "acting_type_section",
+   "fieldtype": "Section Break",
+   "label": "Acting Details"
+  },
+  {
+   "fieldname": "acting_type",
+   "fieldtype": "Select",
+   "label": "Acting Type",
+   "options": "\nLateral Acting\nHigher Post Acting"
+  },
+  {
+   "fieldname": "column_break_103",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.acting_type == \"Lateral Acting\"",
+   "fieldname": "later_acting_percentage",
+   "fieldtype": "Select",
+   "label": "Lateral Acting %",
+   "options": "\n1%\n2%\n3%\n4%\n5%\n6%\n7%\n8%\n9%\n10%"
+  },
+  {
+   "depends_on": "eval:doc.acting_type==\"Higher Post Acting\"",
+   "fieldname": "higher_post_acting",
+   "fieldtype": "Select",
+   "label": "Higer Post Acting",
+   "options": "\nVariance\n10%"
+  },
+  {
+   "fieldname": "acting_from_date",
+   "fieldtype": "Date",
+   "label": "Acting From"
+  },
+  {
+   "fieldname": "acting_to_date",
+   "fieldtype": "Date",
+   "label": "Acting To"
+  },
+  {
+   "fieldname": "section_break_106",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_108",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_110",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "type_of_leave",
+   "fieldtype": "Link",
+   "label": "Type of Leave",
+   "options": "Leave Type"
+  },
+  {
+   "collapsible_depends_on": "eval:doc.internal_memo_type==\"Acting Appointment\"",
+   "fieldname": "section_break_112",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "reason_for_acting_appoint",
+   "fieldtype": "Small Text",
+   "label": "Reason for Acting Appoint"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-06-16 02:50:21.312821",
+ "modified": "2020-06-17 22:21:57.525392",
  "modified_by": "Administrator",
  "module": "MOI Register",
  "name": "Document Register",
