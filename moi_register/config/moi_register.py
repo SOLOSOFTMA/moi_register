@@ -9,10 +9,12 @@ def get_data():
 						{
 							"type": "doctype",
 							"name": "Document Type",
+							"onboard": 1,
 						},
                         {
 							"type": "doctype",
 							"name": "Internal Memo Type",
+							"onboard": 1,
 						},
 				]
 			},
@@ -22,6 +24,7 @@ def get_data():
 						{
 							"type": "doctype",
 							"name": "Document Register",
+							"onboard": 1,
 						},
 				]
 			},

@@ -13,7 +13,7 @@
    "label": "Description"
   }
  ],
- "modified": "2020-06-02 10:37:59.597341",
+ "modified": "2020-06-19 00:39:20.067074",
  "modified_by": "Administrator",
  "module": "MOI Register",
  "name": "Internal Memo Type",
@@ -32,27 +32,22 @@
    "write": 1
   },
   {
-   "create": 1,
-   "delete": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Document Approval",
-   "share": 1,
-   "write": 1
+   "share": 1
   },
   {
-   "create": 1,
    "email": 1,
    "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
    "role": "Document Inward",
-   "share": 1,
-   "write": 1
+   "share": 1
   },
   {
    "email": 1,
@@ -61,12 +56,13 @@
    "read": 1,
    "report": 1,
    "role": "Document Outward",
-   "share": 1,
-   "write": 1
+   "share": 1
   }
  ],
  "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "ASC",
- "track_changes": 1
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
 }

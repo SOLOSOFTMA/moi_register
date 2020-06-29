@@ -14,6 +14,7 @@
   "column_break_3",
   "ref",
   "register_date",
+  "piority",
   "status",
   "document_type_section",
   "document_from_employee",
@@ -31,7 +32,6 @@
   "director_of_ssd_name",
   "director_of_ssd_status",
   "request_for_transfer_section",
-  "piority",
   "amount",
   "column_break_20",
   "account_number",
@@ -119,6 +119,20 @@
   "type_of_leave",
   "section_break_112",
   "reason_for_acting_appoint",
+  "vehicle_permit_section",
+  "authoriser_driver",
+  "vehicle_permit_start_date",
+  "vehicle_permit_start_time",
+  "vehicle_number",
+  "data_118",
+  "authoriser_driver_name",
+  "vehicle_permit_end_date",
+  "vehicle_permit_end_time",
+  "section_break_121",
+  "vehicle_permit_reason",
+  "savingram_section",
+  "savingram_to",
+  "savingram",
   "amended_from"
  ],
  "fields": [
@@ -188,7 +202,8 @@
   {
    "allow_on_submit": 1,
    "fieldname": "ref",
-   "fieldtype": "Read Only",
+   "fieldtype": "Data",
+   "hidden": 1,
    "label": "Ref"
   },
   {
@@ -215,9 +230,7 @@
    "fieldname": "piority",
    "fieldtype": "Link",
    "in_global_search": 1,
-   "in_list_view": 1,
    "in_preview": 1,
-   "in_standard_filter": 1,
    "label": "Piority",
    "options": "Document Piority"
   },
@@ -230,8 +243,7 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Internal Memo Type",
-   "options": "Internal Memo Type",
-   "reqd": 1
+   "options": "Internal Memo Type"
   },
   {
    "fieldname": "section_break_2",
@@ -465,7 +477,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:in_list([\"Savingram\", \"Internal Memo\"], doc.document_type)",
+   "depends_on": "eval:in_list([\"Internal Memo\"], doc.document_type)",
    "fieldname": "document_type_section",
    "fieldtype": "Section Break",
    "label": "DOCUMENT FROM/TO"
@@ -514,6 +526,7 @@
    "default": "Pending",
    "fieldname": "status",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Approved/Decline",
    "options": "\nPending\nHOD Approved\nEndorsed\nNOT Endorsed\nApproved\nDecline\nCompleted",
    "read_only": 1
@@ -601,9 +614,11 @@
   {
    "allow_on_submit": 1,
    "fieldname": "document_to_employee",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "hidden": 1,
+   "ignore_user_permissions": 1,
    "label": "Document To",
+   "options": "Employee",
    "read_only": 1
   },
   {
@@ -618,10 +633,13 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval: doc.document_type != \"Vehicle Permit\" && doc.internal_memo_type != \"Acting Appointment\"",
    "fieldname": "director_of_ssd",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "hidden": 1,
+   "ignore_user_permissions": 1,
    "label": "Head of SSD",
+   "options": "Employee",
    "read_only": 1
   },
   {
@@ -632,6 +650,7 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval: doc.document_type != \"Vehicle Permit\" && doc.internal_memo_type != \"Acting Appointment\"",
    "fieldname": "director_of_ssd_status",
    "fieldtype": "Select",
    "label": "Endorsed/Decline",
@@ -645,10 +664,12 @@
    "label": "Head of Department"
   },
   {
+   "depends_on": "eval: doc.document_type != \"Vehicle Permit\" && doc.internal_memo_type != \"Acting Appointment\"",
    "fetch_from": "director_of_ssd.employee_name",
    "fieldname": "director_of_ssd_name",
-   "fieldtype": "Read Only",
-   "label": "Name"
+   "fieldtype": "Data",
+   "label": "Name",
+   "read_only": 1
   },
   {
    "fieldname": "department_approval_section",
@@ -774,6 +795,7 @@
    "label": "Acting To"
   },
   {
+   "depends_on": "eval:doc.internal_memo_type==\"Acting Appointment\"",
    "fieldname": "section_break_106",
    "fieldtype": "Section Break"
   },
@@ -792,7 +814,7 @@
    "options": "Leave Type"
   },
   {
-   "collapsible_depends_on": "eval:doc.internal_memo_type==\"Acting Appointment\"",
+   "depends_on": "eval:doc.internal_memo_type==\"Acting Appointment\"",
    "fieldname": "section_break_112",
    "fieldtype": "Section Break"
   },
@@ -800,10 +822,86 @@
    "fieldname": "reason_for_acting_appoint",
    "fieldtype": "Small Text",
    "label": "Reason for Acting Appoint"
+  },
+  {
+   "depends_on": "eval:doc.document_type==\"Vehicle Permit\"",
+   "fieldname": "vehicle_permit_section",
+   "fieldtype": "Section Break",
+   "label": "Vehicle Permit"
+  },
+  {
+   "fieldname": "authoriser_driver",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Authorised Driver",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "authoriser_driver.employee_name",
+   "fieldname": "authoriser_driver_name",
+   "fieldtype": "Read Only",
+   "label": "Name of Authorised Driver"
+  },
+  {
+   "fieldname": "vehicle_number",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Vehicle Number",
+   "options": "Vehicle"
+  },
+  {
+   "fieldname": "data_118",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.document_type==\"Vehicle Permit\"",
+   "fieldname": "section_break_121",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "vehicle_permit_reason",
+   "fieldtype": "Small Text",
+   "label": "Reason"
+  },
+  {
+   "fieldname": "vehicle_permit_start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "vehicle_permit_start_time",
+   "fieldtype": "Time",
+   "label": "Start Time"
+  },
+  {
+   "fieldname": "vehicle_permit_end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "vehicle_permit_end_time",
+   "fieldtype": "Time",
+   "label": "End Time"
+  },
+  {
+   "depends_on": "eval:doc.document_type==\"Savingram\"",
+   "fieldname": "savingram_section",
+   "fieldtype": "Section Break",
+   "label": "Savingram Details"
+  },
+  {
+   "fieldname": "savingram",
+   "fieldtype": "Text Editor",
+   "label": "Savingram"
+  },
+  {
+   "fieldname": "savingram_to",
+   "fieldtype": "Data",
+   "label": "Savingram To"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-06-17 22:21:57.525392",
+ "modified": "2020-06-22 23:21:48.887903",
  "modified_by": "Administrator",
  "module": "MOI Register",
  "name": "Document Register",
@@ -861,6 +959,7 @@
   }
  ],
  "search_fields": "document_type, document_from",
+ "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1,

@@ -4,6 +4,11 @@
 frappe.ui.form.on('Document Register', {
 
 	refresh: function(frm) {
+		if (frm.doc.document_type == "Savingram"){
+			cur_frm.set_df_property("document_type_section", "hidden", 1);
+		}else{
+			cur_frm.set_df_property("document_type_section", "hidden", 0);
+		}
 		 frappe.call({
             "method": "frappe.client.get",
             args: {
@@ -16,34 +21,26 @@ frappe.ui.form.on('Document Register', {
 
 						if (in_list(["F","G","H","I","J"], data.message["grade"])){
 							if(frm.doc.hod_approval_status == "Approved" || frm.doc.hod_approval_status == "Decline"){
-								cur_frm.set_df_property("hod_approval_status", "read_only", 1);
+//								cur_frm.set_df_property("hod_approval_status", "read_only", 1);
 								
 								if(frm.doc.hod_approval_status == "Approved" && frm.doc.workflow_state == "HOD Approved"){
 									frm.set_value("status", "HOD Approved")
 								}else if (frm.doc.hod_approval_status == "Decline"){
 									frm.set_value("status", "Decline")
 								}
-
-								if(frm.doc.hod_approval_status == "Approved" && frm.doc.internal_memo_type == "Acting Appointment"){
-									if (frm.doc.workflow_state == "HOD Approved"){
-										frm.set_value("status", "Endorsed")
-//										frm.set_value("workflow_state", "Endorsed")
-										frm.set_value("director_of_ssd_status", "Endorsed")
-									}
-								}
 							}
 							else{
-								cur_frm.set_df_property("hod_approval_status", "read_only", 0);
-								cur_frm.set_df_property("director_of_ssd_status", "read_only", 1);
+//								cur_frm.set_df_property("hod_approval_status", "read_only", 0);
+//								cur_frm.set_df_property("director_of_ssd_status", "read_only", 1);
 							}
 						}else {
-							cur_frm.set_df_property("hod_approval_status", "read_only", 1);
-							cur_frm.set_df_property("director_of_ssd_status", "read_only", 1);
+//							cur_frm.set_df_property("hod_approval_status", "read_only", 1);
+//							cur_frm.set_df_property("director_of_ssd_status", "read_only", 1);
 						}
 
-						if (in_list(["Manager Finance", "Director Corp.Services"], data.message["designation"])){
+						if (in_list(["Manager Finance", "Director Co-oporative Services"], data.message["designation"])){
 							if(frm.doc.director_of_ssd_status == "Endorsed" || frm.doc.director_of_ssd_status == "NOT Endorsed"){
-								cur_frm.set_df_property("director_of_ssd_status", "read_only", 1);
+//								cur_frm.set_df_property("director_of_ssd_status", "read_only", 1);
 								
 								if(frm.doc.director_of_ssd_status == "Endorsed" && frm.doc.workflow_state == "Endorsed"){
 									frm.set_value("status", "Endorsed")
@@ -52,10 +49,10 @@ frappe.ui.form.on('Document Register', {
 								}
 								
 							}else {
-								cur_frm.set_df_property("director_of_ssd_status", "read_only", 0);	
+//								cur_frm.set_df_property("director_of_ssd_status", "read_only", 0);	
 							}
 						}else {
-							cur_frm.set_df_property("director_of_ssd_status", "read_only", 1);
+//							cur_frm.set_df_property("director_of_ssd_status", "read_only", 1);
 						}
 
 						if (in_list(["CEO"], data.message["designation"]) || data.message["acting_ceo"]=="1"){
@@ -64,14 +61,6 @@ frappe.ui.form.on('Document Register', {
 							}else if (frm.doc.status == "Decline"){
 								frm.set_value("ceo_status", "Decline")
 							}
-							if(frm.doc.internal_memo_type == "Acting Appointment"){
-								if (frm.doc.workflow_state == "HOD Approved"){
-									
-										frm.set_value("workflow_state", "Endorsed")
-									
-								}
-							}
-
 						}
 					}
 		 })
@@ -89,6 +78,11 @@ frappe.ui.form.on('Document Register', {
 			cur_frm.set_df_property("assessment_section", "hidden", 0);
 		}
 		
+	 },
+	 document_type: function(frm){
+		if(in_list(["Savingram","Letter Head"],frm.doc.document_type)){
+			frm.set_df_property('subject',  'read_only', 0);
+		}
 	 },
 	 internal_memo_type: function(frm){
 		 frm.set_value("subject",frm.doc.internal_memo_type);
