@@ -3,7 +3,18 @@
 
 frappe.ui.form.on('Document Register', {
 
+//	setup: function(frm) {
+//		frm.set_query("check_by", function() {
+//			return {
+//				filters: [
+//					["User","role", "in", ["Document Approval"],
+//					["User", 'name','=' ,frappe.db.get_value('Employee', frm.doc.head_of_department, 'user_id')]
+//					]
+//			}
+//		});
+//	},
 	refresh: function(frm) {
+
 		if (frm.doc.document_type == "Savingram"){
 			cur_frm.set_df_property("document_type_section", "hidden", 1);
 		}else{
@@ -64,34 +75,73 @@ frappe.ui.form.on('Document Register', {
 						}
 					}
 		 })
-			 
-		if (frm.doc.status == "Approved") {
-            frm.add_custom_button(__('Assessment'), function() {
-					cur_frm.set_df_property("assessment_section", "hidden", 0);
-					frm.set_value("status", "Completed");
-                }
-            ).addClass("btn-primary");
-			
-			cur_frm.set_df_property("assessment_section", "hidden", 1);
-        }
-		if (frm.doc.status == "Completed") {
-			cur_frm.set_df_property("assessment_section", "hidden", 0);
-		}
 		
-	 },
+		if (frm.doc.docstatus == 1 && frm.doc.check_overtime_request == 0 && frappe.user.has_role("Document Approval")){
+			frm.trigger('show_check_button')
+			}
+			else{
+
+			}
+		},
+		show_check_button: function(frm){
+			frappe.call({
+				"method": "frappe.client.get",
+				args: {
+						doctype: "Employee",
+						filters: { name: frm.doc.head_of_department }
+					},
+				callback: function (data) {
+					if (frappe.session.user == data.message["user_id"]){
+						frm.add_custom_button(__("Check"),function () {
+						frm.trigger('check_overtime_request')
+						}).addClass("btn-primary");
+						}
+					}
+				})
+		},
+		check_overtime_request:function (frm) {
+		var d = new frappe.ui.Dialog({
+			title: __("Check Overtime Request"),
+			fields: [
+				{fieldname: "sec_break", fieldtype: "Section Break", label: __("Check Overtime Request")},
+				{fieldname:'check_by', fieldtype:'Link', options: 'Employee', label: __('Check By')},
+				{fieldname:'overtime_request_comment', fieldtype:'Small Text', label: __("Comments")}
+			],
+			primary_action: function() {
+				var data = d.get_values();
+				frappe.call({
+					args: { docname: frm.doc.name,
+							check_by :  data.check_by,
+							overtime_request_comment : data.overtime_request_comment 
+						},
+					method: "moi_register.moi_register.doctype.document_register.document_register.update_document_register",
+					callback: function(r) {
+						if(!r.exc) {
+							d.hide();
+							frm.reload_doc();
+							msgprint(r.exc)
+						}
+					}
+				});
+			},
+			primary_action_label: __('Update')
+		});
+		d.show();
+		},
+
 	 document_type: function(frm){
-		if(in_list(["Savingram","Letter Head"],frm.doc.document_type)){
-			frm.set_df_property('subject',  'read_only', 0);
-		}
+//		if(in_list(["Savingram","Letter Head"],frm.doc.document_type)){
+//			frm.set_df_property('subject',  'read_only', 0);
+//		}
 	 },
 	 internal_memo_type: function(frm){
 		 frm.set_value("subject",frm.doc.internal_memo_type);
 		 
-		 if (frm.doc.internal_memo_type == "Request Transfer" || frm.doc.internal_memo_type == "Request for Procurement") {
-			  frm.set_df_property('ref',  'read_only', 1);
-		 } else {
-			 frm.set_df_property('ref',  'read_only', 0);
-		 }
+//		 if (frm.doc.internal_memo_type == "Request Transfer" || frm.doc.internal_memo_type == "Request for Procurement") {
+//			  frm.set_df_property('ref',  'read_only', 1);
+//		 } else {
+//			 frm.set_df_property('ref',  'read_only', 0);
+//		 }
 	 }
 });
 
@@ -110,3 +160,5 @@ frappe.ui.form.on("Estimated Cost Table", "total", function(frm, cdt, cdn) {
 
     frm.set_value("total_estimate", total_fees);
 });
+
+

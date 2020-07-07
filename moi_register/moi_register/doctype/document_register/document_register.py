@@ -4,6 +4,10 @@
 
 from __future__ import unicode_literals
 import frappe
+
+from frappe.utils import flt, cint, cstr
+from frappe import _
+from frappe.model.mapper import get_mapped_doc
 from frappe.model.document import Document
 
 class DocumentRegister(Document):
@@ -55,3 +59,14 @@ class DocumentRegister(Document):
         db_value = frappe.db.get_value("Employee", {"user_id": user}, ["name", "employee_name"], as_dict=1)
         self.director_of_ssd = db_value.name
         self.director_of_ssd_name = db_value.employee_name
+
+
+@frappe.whitelist()
+def update_document_register(docname, check_by, overtime_request_comment):
+    emp = frappe.db.get_value("Employee", {"name": check_by}, ["employee_name"], as_dict=1)
+    frappe.db.sql("""Update `tabDocument Register` set check_by=%s, employee_check_name=%s, overtime_request_comment=%s, check_overtime_request = 1 where name=%s""", (check_by, emp.employee_name, overtime_request_comment, docname))
+#    frappe.db.sql("""Update `tabDocument Register` set check_by=%s, overtime_request_comment=%s where name=%s""", (employee, overtime_request_comment, docname))
+    frappe.msgprint(_("Updated {0}").format(docname))
+#        frappe.throw(_("There's no Employee with Salary Structure: {0}. Assign {1} to an Employee to preview Salary Slip").format(salary_structure, salary_structure))
+
+

@@ -20,9 +20,6 @@
   "document_from_employee",
   "document_from",
   "column_break_9",
-  "document_to_employee",
-  "document_to",
-  "ceo_status",
   "department_approval_section",
   "head_of_department",
   "head_of_department_name",
@@ -31,6 +28,10 @@
   "director_of_ssd",
   "director_of_ssd_name",
   "director_of_ssd_status",
+  "column_break_26",
+  "document_to_employee",
+  "document_to",
+  "ceo_status",
   "request_for_transfer_section",
   "amount",
   "column_break_20",
@@ -81,19 +82,12 @@
   "overtime_request_section",
   "request_from",
   "overtime_sheet",
-  "section_break_63",
-  "recommended_by",
-  "employee_name",
-  "employee_post",
-  "column_break_65",
-  "approved_by",
-  "approved_name",
-  "approval_post",
-  "assessment_section",
+  "overtime_request_section_check",
   "check_by",
   "employee_check_name",
   "column_break_68",
-  "comments_overtime",
+  "overtime_request_comment",
+  "check_overtime_request",
   "acting_appointment_section",
   "employee_to_appoint",
   "employee_to_appoint_salutation",
@@ -224,7 +218,7 @@
    "allow_on_submit": 1,
    "fieldname": "document_to",
    "fieldtype": "Read Only",
-   "label": "To"
+   "label": "CEO"
   },
   {
    "fieldname": "piority",
@@ -480,7 +474,7 @@
    "depends_on": "eval:in_list([\"Internal Memo\"], doc.document_type)",
    "fieldname": "document_type_section",
    "fieldtype": "Section Break",
-   "label": "DOCUMENT FROM/TO"
+   "label": "DOCUMENT CREATED BY"
   },
   {
    "depends_on": "eval:doc.document_type==\"Letter Head\"",
@@ -502,24 +496,9 @@
   {
    "fieldname": "overtime_sheet",
    "fieldtype": "Table",
+   "ignore_user_permissions": 1,
    "label": "Overtime Form",
    "options": "Overtime Form"
-  },
-  {
-   "fieldname": "recommended_by",
-   "fieldtype": "Link",
-   "ignore_user_permissions": 1,
-   "label": "Recommended By",
-   "options": "Employee"
-  },
-  {
-   "depends_on": "eval:doc.document_type==\"Overtime Request\"",
-   "fieldname": "section_break_63",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_65",
-   "fieldtype": "Column Break"
   },
   {
    "allow_on_submit": 1,
@@ -545,64 +524,16 @@
   },
   {
    "allow_on_submit": 1,
-   "fieldname": "comments_overtime",
-   "fieldtype": "Small Text",
-   "label": "Comments"
-  },
-  {
-   "fetch_from": "recommended_by.employee_name",
-   "fieldname": "employee_name",
-   "fieldtype": "Read Only",
-   "label": "Employee Name"
-  },
-  {
-   "allow_on_submit": 1,
    "fetch_from": "check_by.employee_name",
    "fieldname": "employee_check_name",
    "fieldtype": "Read Only",
    "label": "Employee Name"
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "approved_by",
-   "fieldtype": "Link",
-   "ignore_user_permissions": 1,
-   "label": "Approved By",
-   "options": "Employee"
-  },
-  {
-   "allow_on_submit": 1,
-   "fetch_from": "approved_by.employee_name",
-   "fieldname": "approved_name",
-   "fieldtype": "Read Only",
-   "label": "Approved Name"
-  },
-  {
-   "depends_on": "eval:doc.document_type==\"Overtime Request\"",
-   "fieldname": "assessment_section",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "request_from",
    "fieldtype": "Link",
    "label": "Request from",
    "options": "Department"
-  },
-  {
-   "allow_on_submit": 1,
-   "fetch_from": "recommended_by.designation",
-   "fieldname": "employee_post",
-   "fieldtype": "Read Only",
-   "hidden": 1,
-   "label": "Employee Post"
-  },
-  {
-   "allow_on_submit": 1,
-   "fetch_from": "approved_by.designation",
-   "fieldname": "approval_post",
-   "fieldtype": "Read Only",
-   "hidden": 1,
-   "label": "Approval Post"
   },
   {
    "fieldname": "document_from_employee",
@@ -617,7 +548,7 @@
    "fieldtype": "Link",
    "hidden": 1,
    "ignore_user_permissions": 1,
-   "label": "Document To",
+   "label": "CEO",
    "options": "Employee",
    "read_only": 1
   },
@@ -668,7 +599,7 @@
    "fetch_from": "director_of_ssd.employee_name",
    "fieldname": "director_of_ssd_name",
    "fieldtype": "Data",
-   "label": "Name",
+   "label": "Head of SSD",
    "read_only": 1
   },
   {
@@ -680,8 +611,8 @@
    "allow_on_submit": 1,
    "fieldname": "ceo_status",
    "fieldtype": "Select",
-   "hidden": 1,
-   "label": "CEO Approval Status"
+   "label": "CEO Approval Status",
+   "read_only": 1
   },
   {
    "depends_on": "eval:doc.internal_memo_type==\"Acting Appointment\"",
@@ -898,10 +829,32 @@
    "fieldname": "savingram_to",
    "fieldtype": "Data",
    "label": "Savingram To"
+  },
+  {
+   "fieldname": "column_break_26",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "overtime_request_section_check",
+   "fieldtype": "Section Break",
+   "label": "OVERTIME REQUEST - CHECK"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "overtime_request_comment",
+   "fieldtype": "Small Text",
+   "label": "Comments"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "check_overtime_request",
+   "fieldtype": "Check",
+   "label": "Check"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-06-22 23:21:48.887903",
+ "modified": "2020-07-08 01:32:51.398127",
  "modified_by": "Administrator",
  "module": "MOI Register",
  "name": "Document Register",
@@ -924,6 +877,18 @@
   },
   {
    "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "CEO",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
    "delete": 1,
    "email": 1,
    "export": 1,
@@ -931,6 +896,7 @@
    "read": 1,
    "report": 1,
    "role": "Document Approval",
+   "set_user_permissions": 1,
    "share": 1,
    "submit": 1,
    "write": 1
@@ -959,6 +925,7 @@
   }
  ],
  "search_fields": "document_type, document_from",
+ "show_name_in_global_search": 1,
  "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

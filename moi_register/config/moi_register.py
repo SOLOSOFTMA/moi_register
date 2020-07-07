@@ -26,6 +26,12 @@ def get_data():
 							"name": "Document Register",
 							"onboard": 1,
 						},
+						{
+							"type": "doctype",
+							"name": "Purchase Order",
+							"label": "Purchase Order Request",
+							"onboard": 1,
+						},
 				]
 			},
 
