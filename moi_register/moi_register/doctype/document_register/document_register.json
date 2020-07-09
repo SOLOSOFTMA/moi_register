@@ -88,6 +88,7 @@
   "column_break_68",
   "overtime_request_comment",
   "check_overtime_request",
+  "check_date",
   "acting_appointment_section",
   "employee_to_appoint",
   "employee_to_appoint_salutation",
@@ -554,9 +555,11 @@
   },
   {
    "fieldname": "head_of_department",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "hidden": 1,
+   "ignore_user_permissions": 1,
    "label": "Head of Department",
+   "options": "Employee",
    "read_only": 1
   },
   {
@@ -835,6 +838,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.document_type == \"Overtime Request\"",
    "fieldname": "overtime_request_section_check",
    "fieldtype": "Section Break",
    "label": "OVERTIME REQUEST - CHECK"
@@ -851,10 +855,15 @@
    "fieldname": "check_overtime_request",
    "fieldtype": "Check",
    "label": "Check"
+  },
+  {
+   "fieldname": "check_date",
+   "fieldtype": "Datetime",
+   "label": "Check Date"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-07-08 01:32:51.398127",
+ "modified": "2020-07-09 21:48:37.634137",
  "modified_by": "Administrator",
  "module": "MOI Register",
  "name": "Document Register",

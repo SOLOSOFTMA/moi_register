@@ -64,9 +64,10 @@ class DocumentRegister(Document):
 @frappe.whitelist()
 def update_document_register(docname, check_by, overtime_request_comment):
     emp = frappe.db.get_value("Employee", {"name": check_by}, ["employee_name"], as_dict=1)
-    frappe.db.sql("""Update `tabDocument Register` set check_by=%s, employee_check_name=%s, overtime_request_comment=%s, check_overtime_request = 1 where name=%s""", (check_by, emp.employee_name, overtime_request_comment, docname))
+    todaydate = frappe.utils.nowdate()
+    frappe.db.sql("""Update `tabDocument Register` set check_by=%s, employee_check_name=%s, overtime_request_comment=%s, check_overtime_request = 1, check_date=%s where name=%s""", (check_by, emp.employee_name, overtime_request_comment, todaydate, docname))
 #    frappe.db.sql("""Update `tabDocument Register` set check_by=%s, overtime_request_comment=%s where name=%s""", (employee, overtime_request_comment, docname))
-    frappe.msgprint(_("Updated {0}").format(docname))
+    frappe.msgprint(_("Overtime Form Updated"))
 #        frappe.throw(_("There's no Employee with Salary Structure: {0}. Assign {1} to an Employee to preview Salary Slip").format(salary_structure, salary_structure))
 
 

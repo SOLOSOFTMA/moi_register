@@ -73,7 +73,7 @@
   {
    "allow_in_quick_entry": 1,
    "fieldname": "proposed_overtime_hours",
-   "fieldtype": "Data",
+   "fieldtype": "Int",
    "in_global_search": 1,
    "in_list_view": 1,
    "in_preview": 1,
@@ -111,7 +111,7 @@
   }
  ],
  "istable": 1,
- "modified": "2020-07-08 01:35:01.600369",
+ "modified": "2020-07-09 20:00:09.318670",
  "modified_by": "Administrator",
  "module": "MOI Register",
  "name": "Overtime Form",
