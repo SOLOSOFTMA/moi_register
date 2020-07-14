@@ -34,14 +34,19 @@ frappe.ui.form.on('Document Register', {
 						}
 					},
 						callback: function(data) {
-							if (!frappe.user.has_role("Document Approval SSD")){
+							if (frappe.user.has_role("Document Approval") && !frappe.user.has_role("Document Approval SSD")){
 								if (frm.doc.status == "HOD Approved"){
 									frm.set_value("hod_approval_status", "Approved")
 									frm.set_value("head_of_department",  data.message["name"])
 									frm.set_value("head_of_department_name",  data.message["employee_name"])
 								}
 							}
-							if (frappe.user.has_role("Document Approval SSD")){
+							if (frappe.user.has_role("Document Approval") && frappe.user.has_role("Document Approval SSD")){
+								if (frm.doc.status == "HOD Approved" && !frm.doc.hod_approval_status){
+									frm.set_value("hod_approval_status", "Approved")
+									frm.set_value("head_of_department",  data.message["name"])
+									frm.set_value("head_of_department_name",  data.message["employee_name"])
+								}
 								if (frm.doc.status == "Endorsed"){
 									frm.set_value("director_of_ssd_status", "Endorsed")
 									frm.set_value("director_of_ssd",  data.message["name"])
