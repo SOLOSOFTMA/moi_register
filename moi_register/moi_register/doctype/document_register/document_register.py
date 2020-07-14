@@ -71,3 +71,17 @@ def update_document_register(docname, check_by, overtime_request_comment):
 #        frappe.throw(_("There's no Employee with Salary Structure: {0}. Assign {1} to an Employee to preview Salary Slip").format(salary_structure, salary_structure))
 
 
+#@frappe.whitelist()
+#def get_user_permission(doc_creator, current_user):
+    
+#    creator_depart = frappe.db.get_value("Employee", {"name": doc_creator}, "department")
+#    current_user_depart = frappe.db.get_value("Employee", {"user_id": current_user}, "department")
+#    if frappe.db.get_value("Department", {"department": creator_depart.department}, "parent_department") == "All Department":
+#        if creator_depart.department == current_user_depart.department:
+#            return True
+    
+#    if frappe.db.get_value("Department", {"department": creator_depart.department}, "parent_department") != "All Department":
+#        if frappe.db.get_value("Department", {"department": creator_depart.department}, "parent_department") == current_user_depart.department:
+#            frappe.msgprint(_("Department"))
+#            return True
+

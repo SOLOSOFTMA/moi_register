@@ -3,17 +3,37 @@
 
 frappe.ui.form.on('Document Register', {
 
-//	setup: function(frm) {
-//		frm.set_query("check_by", function() {
-//			return {
-//				filters: [
-//					["User","role", "in", ["Document Approval"],
-//					["User", 'name','=' ,frappe.db.get_value('Employee', frm.doc.head_of_department, 'user_id')]
-//					]
+	setup: function(frm) {
+		frm.set_query("internal_memo_type", function() {
+			return {
+				filters: [
+					["disable","=", 0,	]
+				]
+				}
+		});
+		frm.set_query("document_type", function() {
+			return {
+				filters: [
+					["disable","=", 0,	]
+				]
+				}
+		});
+	},
+	refresh: function(frm) {
+//		msgprint("Check")
+//		frappe.call({
+//			args: { doc_creator: frm.doc.document_from_employee,
+//					current_user : frappe.session.user
+//				},
+//			method: "moi_register.moi_register.doctype.document_register.document_register.get_user_permission",
+//			callback: function(r) {
+//				if(r.exc) {
+//					d.hide();
+//					frm.reload_doc();
+//					msgprint(r.exc)
+//				}
 //			}
 //		});
-//	},
-	refresh: function(frm) {
 
 		if (frm.doc.document_type == "Savingram"){
 			cur_frm.set_df_property("document_type_section", "hidden", 1);
@@ -23,7 +43,7 @@ frappe.ui.form.on('Document Register', {
 
 		
 		if (!frappe.user.has_role("CEO")){
-		
+	
 			frappe.call({
 				"method": "frappe.client.get",
 				args: {

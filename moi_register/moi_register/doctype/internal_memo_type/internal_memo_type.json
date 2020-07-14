@@ -4,6 +4,7 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "disable",
   "description"
  ],
  "fields": [
@@ -11,9 +12,16 @@
    "fieldname": "description",
    "fieldtype": "Small Text",
    "label": "Description"
+  },
+  {
+   "default": "0",
+   "fieldname": "disable",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Disable"
   }
  ],
- "modified": "2020-06-19 00:39:20.067074",
+ "modified": "2020-07-14 23:45:42.436999",
  "modified_by": "Administrator",
  "module": "MOI Register",
  "name": "Internal Memo Type",

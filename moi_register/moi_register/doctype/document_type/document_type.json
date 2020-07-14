@@ -5,6 +5,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "disable",
   "document_type",
   "document_description"
  ],
@@ -19,9 +20,16 @@
    "fieldname": "document_description",
    "fieldtype": "Data",
    "label": "Document Description"
+  },
+  {
+   "default": "0",
+   "fieldname": "disable",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Disable"
   }
  ],
- "modified": "2020-06-19 00:38:12.302243",
+ "modified": "2020-07-14 23:47:34.595939",
  "modified_by": "Administrator",
  "module": "MOI Register",
  "name": "Document Type",
@@ -68,6 +76,7 @@
    "share": 1
   }
  ],
+ "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1,
