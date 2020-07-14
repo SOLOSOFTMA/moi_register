@@ -20,62 +20,60 @@ frappe.ui.form.on('Document Register', {
 		}else{
 			cur_frm.set_df_property("document_type_section", "hidden", 0);
 		}
-		 frappe.call({
-            "method": "frappe.client.get",
-            args: {
-                   doctype: "Employee",
-                    filters: {
-                    user_id: frappe.session.user,
-                      }
-                    },
-                    callback: function(data) {
 
-						if (in_list(["F","G","H","I","J"], data.message["grade"])){
-							if(frm.doc.hod_approval_status == "Approved" || frm.doc.hod_approval_status == "Decline"){
-//								cur_frm.set_df_property("hod_approval_status", "read_only", 1);
-								
-								if(frm.doc.hod_approval_status == "Approved" && frm.doc.workflow_state == "HOD Approved"){
-									frm.set_value("status", "HOD Approved")
-								}else if (frm.doc.hod_approval_status == "Decline"){
-									frm.set_value("status", "Decline")
-								}
-							}
-							else{
-//								cur_frm.set_df_property("hod_approval_status", "read_only", 0);
-//								cur_frm.set_df_property("director_of_ssd_status", "read_only", 1);
-							}
-						}else {
-//							cur_frm.set_df_property("hod_approval_status", "read_only", 1);
-//							cur_frm.set_df_property("director_of_ssd_status", "read_only", 1);
-						}
-
-						if (in_list(["Manager Finance", "Director Co-oporative Services"], data.message["designation"])){
-							if(frm.doc.director_of_ssd_status == "Endorsed" || frm.doc.director_of_ssd_status == "NOT Endorsed"){
-//								cur_frm.set_df_property("director_of_ssd_status", "read_only", 1);
-								
-								if(frm.doc.director_of_ssd_status == "Endorsed" && frm.doc.workflow_state == "Endorsed"){
-									frm.set_value("status", "Endorsed")
-								}else if (frm.doc.director_of_ssd_status == "NOT Endorsed"){
-									frm.set_value("status", "NOT Endorsed")
-								}
-								
-							}else {
-//								cur_frm.set_df_property("director_of_ssd_status", "read_only", 0);	
-							}
-						}else {
-//							cur_frm.set_df_property("director_of_ssd_status", "read_only", 1);
-						}
-
-						if (in_list(["CEO"], data.message["designation"]) || data.message["acting_ceo"]=="1"){
-							if(frm.doc.status == "Approved"){
-								frm.set_value("ceo_status", "Approved")
-							}else if (frm.doc.status == "Decline"){
-								frm.set_value("ceo_status", "Decline")
-							}
-						}
-					}
-		 })
 		
+		if (!frappe.user.has_role("CEO")){
+		
+			frappe.call({
+				"method": "frappe.client.get",
+				args: {
+					doctype: "Employee",
+						filters: {
+						user_id: frappe.session.user,
+						
+						}
+					},
+						callback: function(data) {
+							if (!frappe.user.has_role("Document Approval SSD")){
+								if (frm.doc.status == "HOD Approved"){
+									frm.set_value("hod_approval_status", "Approved")
+									frm.set_value("head_of_department",  data.message["name"])
+									frm.set_value("head_of_department_name",  data.message["employee_name"])
+								}
+							}
+							if (frappe.user.has_role("Document Approval SSD")){
+								if (frm.doc.status == "Endorsed"){
+									frm.set_value("director_of_ssd_status", "Endorsed")
+									frm.set_value("director_of_ssd",  data.message["name"])
+									frm.set_value("director_of_ssd_name",  data.message["employee_name"])
+								}
+							}
+						}
+			
+			})
+		}
+		if (frappe.user.has_role("CEO")){
+		
+			frappe.call({
+				"method": "frappe.client.get",
+				args: {
+					doctype: "Employee",
+						filters: {
+						user_id: frappe.session.user,
+						
+						}
+					},
+						callback: function(data) {
+							if (frm.doc.status == "Approved"){
+								frm.set_value("ceo_status", "Approved")
+								frm.set_value("document_to_employee",  data.message["name"])
+								frm.set_value("document_to",  data.message["employee_name"])
+							}
+						}
+			
+			})
+		}
+			
 		if (frm.doc.docstatus == 1 && frm.doc.check_overtime_request == 0 && frappe.user.has_role("Document Approval")){
 			frm.trigger('show_check_button')
 			}
@@ -142,7 +140,7 @@ frappe.ui.form.on('Document Register', {
 //		 } else {
 //			 frm.set_df_property('ref',  'read_only', 0);
 //		 }
-	 }
+	 },
 });
 
 frappe.ui.form.on("Estimated Cost Table", "rate", function(frm, cdt, cdn) {
