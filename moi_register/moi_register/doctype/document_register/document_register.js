@@ -24,7 +24,7 @@ frappe.ui.form.on('Document Register', {
 //		if(in_list(["Savingram","Letter Head"],frm.doc.document_type) && (!frappe.user.has_role("Document Approval"))){
 		
 //		frappe.throw(__('Not Authorised'))
-		frappe.show_alert({message:__('Not Authorised'), indicator:'red'}, 6);
+		frappe.show_alert({message:__('Not Authorised'), indicator:'red'}, 3);
 			frappe.set_route("List", "Document Register")
 			location.reload(true)		
 				
@@ -39,7 +39,7 @@ frappe.ui.form.on('Document Register', {
 		}
 
 		
-		if (!frappe.user.has_role("CEO") && !doc.__islocal){
+		if (!frappe.user.has_role("CEO")){
 	
 			frappe.call({
 				"method": "frappe.client.get",

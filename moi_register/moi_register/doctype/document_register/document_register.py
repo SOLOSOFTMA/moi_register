@@ -4,11 +4,12 @@
 
 from __future__ import unicode_literals
 import frappe
-
+import json
 from frappe.utils import flt, cint, cstr
-from frappe import _
+from frappe import throw, _
 from frappe.model.mapper import get_mapped_doc
 from frappe.model.document import Document
+
 
 class DocumentRegister(Document):
 
@@ -71,19 +72,16 @@ def update_document_register(docname, check_by, overtime_request_comment):
 #        frappe.throw(_("There's no Employee with Salary Structure: {0}. Assign {1} to an Employee to preview Salary Slip").format(salary_structure, salary_structure))
 
 
-#@frappe.whitelist()
-#def get_user_permission(doc_creator, current_user):
+#@frappe.whitelist(allow_guest=True)
+#def get_permission_query_conditions(user):
+#    if "Document Approval" in frappe.get_roles(user) and doc.document_type == "Letter Head":
+#        return ""
+
+#@frappe.whitelist(allow_guest=True)
+#def has_permission(doc, user):
+#    if doc.document_type=="Document Approval" or doc.owner==user:
+#       return True 
+#    if doc.get("roles", {"role":("in", frappe.get_roles(user))}):
+#       return True
     
-#    creator_depart = frappe.db.get_value("Employee", {"name": doc_creator}, "department")
-#    current_user_depart = frappe.db.get_value("Employee", {"user_id": current_user}, "department")
-#    if frappe.db.get_value("Department", {"department": creator_depart.department}, "parent_department") == "All Department":
-#        if creator_depart.department == current_user_depart.department:
-#            return True
-    
-#    if frappe.db.get_value("Department", {"department": creator_depart.department}, "parent_department") != "All Department":
-#        if frappe.db.get_value("Department", {"department": creator_depart.department}, "parent_department") == current_user_depart.department:
-#            frappe.msgprint(_("Department"))
-#            return True
-
-
-
+#    return False
