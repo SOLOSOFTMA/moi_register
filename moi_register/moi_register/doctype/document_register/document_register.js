@@ -19,21 +19,18 @@ frappe.ui.form.on('Document Register', {
 				}
 		});
 	},
+	onload: function(frm){
+		if (in_list(["Savingram","Letter Head"],frm.doc.document_type) && (!frappe.user.has_role("Document Approval") && !frappe.user.has_role("CEO"))){
+//		if(in_list(["Savingram","Letter Head"],frm.doc.document_type) && (!frappe.user.has_role("Document Approval"))){
+		
+//		frappe.throw(__('Not Authorised'))
+		frappe.show_alert({message:__('Not Authorised'), indicator:'red'}, 6);
+			frappe.set_route("List", "Document Register")
+			location.reload(true)		
+				
+		}		
+	},
 	refresh: function(frm) {
-//		msgprint("Check")
-//		frappe.call({
-//			args: { doc_creator: frm.doc.document_from_employee,
-//					current_user : frappe.session.user
-//				},
-//			method: "moi_register.moi_register.doctype.document_register.document_register.get_user_permission",
-//			callback: function(r) {
-//				if(r.exc) {
-//					d.hide();
-//					frm.reload_doc();
-//					msgprint(r.exc)
-//				}
-//			}
-//		});
 
 		if (frm.doc.document_type == "Savingram"){
 			cur_frm.set_df_property("document_type_section", "hidden", 1);
@@ -42,7 +39,7 @@ frappe.ui.form.on('Document Register', {
 		}
 
 		
-		if (!frappe.user.has_role("CEO")){
+		if (!frappe.user.has_role("CEO") && !doc.__islocal){
 	
 			frappe.call({
 				"method": "frappe.client.get",
